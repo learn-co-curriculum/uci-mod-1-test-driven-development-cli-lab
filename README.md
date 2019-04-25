@@ -1,285 +1,355 @@
-# Experiencing HTML Lab
+# Test-Driven Development and the Command Line
 
-## Problem Statement
+## Learning Goals
 
-How do we go about writing text for the web? How is that different from the
-text that we write in a text file?  We're going to experience for ourselves how
-these things are different in this lab.
+- Define Test-Driven Development
+- Read and interpret tests
+- Create file and folders using the command line
+- Pass your first tests
 
-You don't need any prior knowledge of HTML for this lab. We're going to tell
-you what to type. Don't focus on specific commands or taking notes. Everything
-will be covered thoroughly later. Instead, the goal of this exercise is to feel
-the joy of editing a file and seeing the change "out there."
+## Introduction
 
-## Objectives
+As mentioned in earlier lessons, portions of this course are designed to test
+what you have learned as you read through the content. We will introduce a
+concept, then follow up with a task that you must finish in order to
+register completion. These task driven lessons are referred to as labs.
+All labs follow a similar format:
 
-1. Distinguish _markup_ from _content_
-2. Define the difference between _source text_ and _rendered text_
-3. Use HTML tags to change the display of _content_ by providing _markup_
+- Work in the provided files, testing out potential solutions
+- Run `learn` to print the tests at any point while you're writing your code
+- Read the error messages produced by running the tests
+- Write code or run commands that will resolve these error messages
+- Run `learn` again to check your progress
+- Repeat until all tests are passing
+- Run `learn submit` to submit your solution
 
-**NOTE:** We don't expect you to know _markup_, _content_, _source text_, or
-_rendered text_ yet. We'll be defining them in this lab.
+As the lesson material becomes more complex, so do the tests. Getting acquainted
+with reading and interpreting tests will help you overcome some of the toughest
+labs ahead. In this lesson, we're going to walk through reading tests while also
+getting a little more practice with the command line.
 
-## Distinguish _markup_ from _content_
+## Test-Driven Development
 
-### Create a Text File With A List
+When we want to run an experiment, we develop a hypothesis that we test:
 
-Launch the Learn IDE (use the Open IDE button) and create a new file called
-`my_list.txt`. The file extension suggests to humans and operating systems
-that it contains text.
+> **_Hypothesis:_** Whenever I do **A**, **B** happens.
 
-Think of a collection of things united by theme: Pok&eacute;mon, Old-school
-MC's, Prime Ministers of New Zealand, Magical Beasts and Where to Find Them,
-etc.
+> **_Test:_** Do **A**. Does **B** happen? Yes or no?
 
-Now write in a few of these in your file. Here's one from us (songs in the
-English post-punk genre).
+Take a simple example:
+
+> **_Hypothesis:_** I have a hypothesis that when type 2 + 2 in a calculator,
+> I will get a result of 4.
+
+> **_Test:_** I type 2 + 2 into a calculator. Has 4 been returned?
+
+Sometimes experiments are much less predictable. Sometimes we have to create a
+hypothesis, test it, revise it, test it again, and so on, and so on. This
+concept of building and testing hypotheses, while simple, is a critical part of
+the [scientific method][].
+
+A process exists in the software development industry known as
+[test-driven development][] that takes the idea of building hypotheses and
+incorporates it into program design and development. While the term has a specific
+meaning in the programming world, the concepts aren't that different from
+processes you've experienced in school. If you've ever taken a written test for
+something like math or a foreign language, you've been part of a test-driven
+development process. The difference is that with tests in school, _you_, your
+knowledge, and skills, are the _product_.
+
+Imagine walking into a classroom and your teacher gives you a test. The test
+asks you to do one thing:
 
 ```text
-"Love Will Tear Us Apart"
-"Bela Lugosi's Dead"
-"A Forest"
-"Nine While Nine"
-"Girlfriend In a Coma"
+Please write "Hello World!" on this sheet of paper and return it
 ```
 
-The material we typed into the file is called the _content_.  It's the thing
-we're trying to communicate.
+You write `Hello World` and give it to the teacher. The teacher looks at it,
+writes a note on it and gives it back:
 
-### Content as a List in a Text File
+```text
+Test
+  'Hello World!' is written on the page (FAILED)
 
-A problem with our _content_ is that it doesn't explicitly state anywhere that
-it's a list.  In the example, *you* see a list of songs. *we* see a list of
-songs. But a browser doesn't know what a "list" is. 
+Failures:
 
-We need to help browser **know**  what a list is. The secret is to add "notes"
-or "breadcrumbs" to the content that tell the browser that it has list items
-and that these items "go together" in a list.  To add these "notes" we surround
-the _content_ with bits of _markup_, with bits of HTML. 
+1) 'Hello World' did not match 'Hello World!'
 
-We will take the text content from our text file, paste it into a new HTML file
-and then we will add _markup_ so that a browser "sees" a list.  Let's write an
-HTML file!
+1 example, 1 failure
 
-### Text Inside an HTML File
-
-We're going to create an HTML list together.
-
-1. Create a new file called `my_list.html`
-2. Copy the contents of `my_list.txt` and paste them into `my_list.html`
-3. Use `command + s` to save the `my_list.html` file
-4. In the Learn IDE, click on the **terminal** window and type `httpserver`.
-5. Hit enter to run the command
-
-The `httpserver` program will start up. This is a program that publishes your
-HTML files on the internet. When you want to quit `httpserver`, press `Control + c`
-to end the program. If you want to try it out now, go ahead. Just remember
-to start `httpserver` back up again!
-
-When `httpserver` starts, you'll be given a web site address.
-
-![Starting the web server](https://curriculum-content.s3.amazonaws.com/web-development/experiencing-html-lab/launched_web_server.png)
-
-`httpserver` says:
-
-`Your server is running at 67.205.152.27:59976`
-
-Open up another browser tab, paste that web site address and add the file I wish
-to view after a `/`. We want to view `my_list.html`, so in my example, I'll be
-visiting `http://67.205.152.27:59976/my_list.html`. **We will call this tab "the
-viewing tab."**
-
-We see:
-
-![HTML file with non-marked-up content displays on one line](https://curriculum-content.s3.amazonaws.com/web-development/intro-the-shell/non_marked_up_list.png)
-
-As noted above, the browser doesn't know that items on new lines means "items
-in a list." Browsers ignore when HTML has is split onto new lines. We cover why
-a little later in this README. Since the browser doesn't know we intend this to
-be a list **and** since browsers ignore when _content_ is split onto different
-lines, it displays all the _content_ on one line. Not what we wanted.
-
-### A Text Not-Really-A-List Into a Real-HTML-List
-
-> **REMEMBER**: This lab will provide you what to type. Subsequent labs will
-> deeply examine details of HTML markup. However, our goal here is to show how
-> slight changes to markup can quickly alter the browser's display of content.
-> If you're fuzzy on a detail that's fine.
-
-#### Marking-Up List Items
-
-OK, we've reached the critical moment. We're going to tell the browser that
-these bits of letters represent **list items**. To do so we "wrap" each line
-with `<li>` and `</li>`. For example: `<li>"A Forest"</li>`
-
-```html
-<li>"Love Will Tear Us Apart"</li>
-<li>"Bela Lugosi's Dead"</li>
-<li>"A Forest"</li>
-<li>"Nine While Nine"</li>
-<li>"Girlfriend In a Coma"</li>
+Please try again.
 ```
 
-Flip back to the **viewing tab** and refresh (make sure your `httpserver` program
-is still running!). You should see something like the following:
+You... failed the test, but you can try again? You edit your answer, add an
+exclamation point (`!`) and give the sheet back. Your teacher looks at the
+paper, smiles, writes something and gives it back:
 
-![Songlist](https://curriculum-content.s3.amazonaws.com/web-development/experiencing-html-lab/ul_song_list.png)
+```text
+Test
+  'Hello World!' is written on the page
 
-**AWESOME**.
+1 example, 0 failures
 
-In this step we added some HTML _markup_:
-
-* The `<li>` is an HTML **list item**  _opening tag_
-* The `</li>` `li` list item  _closing tag_
-* We would call this pair of opening and closing tags"an `li` tag"
-* The whole length of text of _opening markup_ plus "wrapped" content plus
-  _closing markup_ (`<li>...content...</li>`) is called "an HTML element;" or,
-  more exactly, an `li element`
-
-Again, you don't need to memorize these terms yet, but we want to help you
-develop an intuition for how these words are used. You will be using these
-terms when speaking with other developers and HTML authors.
-
-It may not seem like we did much work, but idea of a method for "marking up"
-_content_ and linking it is the foundation of the web. It's what made Tim
-Berners-Lee's reputation. And **you** just experienced Sir Tim's great insight.
-**AWESOME**.
-
-Let's work with additional HTML tags to see how we tweak our HTML a bit more.
-Let's tell the browser "Hey! These list items, they go together!"
-
-### Saying List Items Go Together
-
-Wrap the entire set of `<li>` items with an `<ol>` and `</ol>` like so:
-
-```html
-<ol>
-<li>"Love Will Tear Us Apart"</li>
-<li>"Bela Lugosi's Dead"</li>
-<li>"A Forest"</li>
-<li>"Nine While Nine"</li>
-<li>"Girlfriend In a Coma"</li>
-</ol>
+You passed. Please give me the test back.
 ```
 
-Save the file and refresh the **viewing tab**. It should display:
+Uh... Oh. Okay! You passed the test! You give the teacher the test back.
 
-![List displayed as ordered list](https://curriculum-content.s3.amazonaws.com/web-development/experiencing-html-lab/ordered_list.png)
+In very simple terms, this is how Learn works. With the tests in this course,
+unlike most classroom tests, you can just keep trying until you get it right. If
+you accidentally write `Hello World` and forget the exclamation point, you will
+get feedback and be able to try again.
 
-We told the browser that this set of list items that we "wrapped" in the
-**ordered list** tag go together **as a list**. Because we told the browser
-that the list is **ordered** it decided to be helpful and put numbers next to
-the list items _for us_.
+Being able to try things, get feedback, then try again as many times as you
+need helps you develop a deeper and deeper understanding of the topic. As you
+work through the course and encounter labs with tests, you will have to build
+hypotheses, use these tests to confirm if they are correct, rebuild them and
+test again.
 
-### Wrapping and Indentation
+Tests in this course are handled by a tool called [RSpec][]. RSpec is written in
+[Ruby][], but you do not need to know Ruby to read, interpret and ultimately
+solve the tests. We will walk through the first tests in this lab so you can get
+a better feel for them.
 
-With all these angle-brackets of _markup_ and _content_ mixed together, HTML
-authors like to use indentation to make HTML easier to read. Here's how most
-HTML authors would expect our code from the previous section to be arranged:
+## Solve the First Test - Creating Files Using `touch`
 
-```html
-<ol>
-  <li>"Love Will Tear Us Apart"</li>
-  <li>"Bela Lugosi's Dead"</li>
-  <li>"A Forest"</li>
-  <li>"Nine While Nine"</li>
-  <li>"Girlfriend In a Coma"</li>
-</ol>
+Your first test in this lab is to add an additional file using the command line.
+Let's first read what the test message says. In the command line, type
+`learn` and press `Enter` to see the message:
+
+```text
+// ♥ learn
+
+File and folder creation
+  test.html
+    is a file in the main folder of this lesson (FAILED - 1)
+
+Failures:
+
+  1) File and folder creation test.html is a file in the main folder of this lesson
+     Failure/Error: expect(File.exists?("test.html")).to be(true), "Expected 'test.html' to exist. Use `touch test.html` to create it"
+       Expected 'test.html' to exist. Use `touch test.html` to create it
+     # ./spec/cli_spec.rb:7:in `block (3 levels) in <top (required)>'
+
+Finished in 0.02222 seconds (files took 0.30186 seconds to load)
+1 example, 1 failure
+
+Failed examples:
+
+rspec ./spec/cli_spec.rb:6 # File and folder creation test.html is a file in the main folder of this lesson
+
 ```
 
-Update your document. Save it and refresh your **viewing tab**.
+There are a few parts to the code snippet above. First, there is a section of
+text starting with `File and folder creation`:
 
-Remember earlier when noticed browsers ignored _content_ when it was on
-separate lines? Cleaning up your code requires splitting lines, adding spaces,
-and adding tabs. Browser ignore those characters that _humans_ use to make
-their HTML reader-friendly.
-
-### Ordered to Unordered
-
-Let's change our ordered list to be **unordered**. If `<ol>` means **ordered
-list**, you might guess that `<ul>` means **unordered list**. Make the change
-and refresh your **viewing tab**.
-
-![Back to Unordered List](https://curriculum-content.s3.amazonaws.com/web-development/experiencing-html-lab/unordered_list.png)
-
-Here we return to a "bulleted" unordered list.
-
-> **ASIDE**: If you've been following along closely, you  might be wondering, if
-> we didn't have a `<ul>` tag around our `<li>` items earlier, how did the
-> browser know how treat those `<li>` as if they were in a `<ul>`? When browsers
-> detect problematic HTML they guess! This can lead to some very strange results
-> when you make an error, but if you write _invalid_ HTML, they try to recover.
-> HTML validity will be discussed further soon!
-
-### Add a Description Paragraph
-
-Let's introduce our list by adding some background:
-
-```html
-<p>Some of my favorite post-punk and Goth songs!</p>
-<ul>
-  <li>"Love Will Tear Us Apart"</li>
-  <li>"Bela Lugosi's Dead"</li>
-  <li>"A Forest"</li>
-  <li>"Nine While Nine"</li>
-  <li>"Girlfriend In a Coma"</li>
-</ul>
+```text
+File and folder creation
+  test.html
+    is a file in the main folder of this lesson (FAILED - 1)
 ```
 
-Take a look at your "rendered page" and verify the result is to your liking.
+This section of text is a list of test names, organized in order. The first
+test can be read from this section as 'test.html is a file in the main folder
+of this lesson.' There are five tests in total in this lab, and as you pass
+each one, more will show up here.
 
-### Put a Header on It
+In the second section:
 
-Lastly, let's put a "heading" on the top of our document. Add a `h1` element
-with an appropriate title inside.
+```text
+Failures:
 
-`<h1>My Music List</h1>`
+  1) File and folder creation test.html is a file in the main folder of this lesson
+     Failure/Error: expect(File.exists?("test.html")).to be(true), "Expected 'test.html' to exist. Use `touch test.html` to create it"
+       Expected 'test.html' to exist. Use `touch test.html` to create it
+     # ./spec/cli_spec.rb:7:in `block (3 levels) in <top (required)>'
 
-### Ta-Dah!
-
-Admire your finished work!
-
-Here's the full example code:
-
-```html
-<h1>My Music List</h1>
-<p>Some of my favorite post-punk and Goth songs!</p>
-<ul>
-  <li>"Love Will Tear Us Apart"</li>
-  <li>"Bela Lugosi's Dead"</li>
-  <li>"A Forest"</li>
-  <li>"Nine While Nine"</li>
-  <li>"Girlfriend In a Coma"</li>
-</ul>
+Finished in 0.02222 seconds (files took 0.30186 seconds to load)
+1 example, 1 failure
 ```
 
-![Final Document](https://curriculum-content.s3.amazonaws.com/web-development/experiencing-html-lab/final_header_paragraph_ul.png)
+The first line is the full test description, the same that we saw in the previous
+section. The second line is displaying the actual line in the test that failed:
+
+```text
+Failure/Error: expect(File.exists?("test.html")).to be(true), "Expected 'test.html' to exist. Use `touch test.html` to create it"
+```
+
+Some of this may seem strange. If you read
+`expect(File.exists?("test.html")).to be(true)` out loud, it _sort of_ makes
+ sense...
+
+> "Expect file exists test.html to be true"
+
+This code is the actual test, written in Ruby. Without knowing exactly what is
+going on, we can still gather some information... it expects _something_ to be
+true. In fact, Ruby is asking a question: 'does `test.html` exist?' The test
+expects the answer to this question be true.
+
+This line won't always make sense and only _sort of_ makes sense here, but
+taking the time to read through it can give you some insight into what is going
+on. The line following this actually has all the information we need to solve
+this particular test:
+
+```text
+Expected 'test.html' to exist. Use `touch test.html` to create it
+```
+
+This test was expecting a `test.html` file. Run `touch test.html`, then run
+`learn` once again. The test output should change. You should also have a new
+`test.html` file in your lesson folder.
+
+Let's look at the second test and the remainder of the test messages.
+
+## Solve the Second Test - Creating Folders Using `mkdir`
+
+When `learn` is run now, you should see this:
+
+```text
+File and folder creation
+  test.html
+    is a file in the main folder of this lesson
+  example_folder
+    is a folder in the main folder of this lesson (FAILED - 1)
+
+Failures:
+
+  1) File and folder creation example_folder is a folder in the main folder of this lesson
+     Failure/Error: expect(is_directory).to be_truthy, "Expected 'example_folder' to exist. Use `mkdir example_folder` to create it"
+       Expected 'example_folder' to exist. Use `mkdir example_folder` to create it
+     # ./spec/cli_spec.rb:14:in `block (3 levels) in <top (required)>'
+
+Finished in 0.02672 seconds (files took 0.30673 seconds to load)
+2 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/cli_spec.rb:12 # File and folder creation example_folder is a folder in the main folder of this lesson
+```
+
+Notice that the first section has changed. The first test is passing, no longer
+showing `(FAILED - 1)`, and a new test has appeared. Some labs like this one are
+set up to show you a new test every time you pass the current one until you pass
+them all. Other labs will give you the results of all tests at once every time.
+
+The second section displays a new failed test:
+
+```text
+Failures:
+
+  1) File and folder creation example_folder is a folder in the main folder of this lesson
+     Failure/Error: expect(is_directory).to be_truthy, "Expected 'example_folder' to exist. Use `mkdir example_folder` to create it"
+       Expected 'example_folder' to exist. Use `mkdir example_folder` to create it
+     # ./spec/cli_spec.rb:14:in `block (3 levels) in <top (required)>'
+
+Finished in 0.02672 seconds (files took 0.30673 seconds to load)
+2 examples, 1 failure
+```
+
+This example, as with the last, is explicit in what it wants you to do in order
+to solve this test. In some lessons, we will provide guidance here in the
+written portion, but others might be more test-driven - you will have to try
+different things, read the tests, see if they change, build hypotheses, modify
+them, on and on...
+
+For now, just focus on solving the next test and learning the next concept. You
+will be able to look back later and see a list of all the things you've learned!
+
+## Solve the Third Test
+
+Solve the second test and run `learn` to see the third. This time, the solution
+is not explicitly stated, but the test still states what it is expecting:
+
+```text
+File and folder creation
+  test.html
+    is a file in the main folder of this lesson
+  example_folder
+    is a folder in the main folder of this lesson
+    test.md
+      is a file within example_folder (FAILED - 1)
+
+Failures:
+
+  1) File and folder creation example_folder test.md is a file within example_folder
+     Failure/Error: expect(file_is_present).to be_truthy, "Expected 'test.md' to exist inside 'example_folder'"
+       Expected 'test.md' to exist inside 'example_folder'
+     # ./spec/cli_spec.rb:20:in `block (4 levels) in <top (required)>'
+
+Finished in 0.0268 seconds (files took 0.32776 seconds to load)
+3 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/cli_spec.rb:18 # File and folder creation example_folder test.md is a file within example_folder
+```
+
+This test is expecting a file, `test.md` to exist inside the `example_folder`
+you just created.
+
+> **Hint:** If we had some way to [change the working directory][cd], we could
+solve this test basically the same way we solved the first test.
+
+## Finish the Remaining Tests
+
+Read through each test, try what you think is the solution, run `learn` to see
+if it is correct. Repeat this process until all five tests are passing and you
+see:
+
+```text
+File and folder creation
+  test.html
+    is a file in the main folder of this lesson
+  example_folder
+    is a folder in the main folder of this lesson
+    test.md
+      is a file within example_folder
+  second_example_folder
+    is a folder in the main folder of this lesson
+    final_test.css
+      is a file within second_example_folder
+
+Finished in 0.00897 seconds (files took 0.32804 seconds to load)
+5 examples, 0 failures
+```
+
+With all of the tests passing it is time to complete the lab. Learn would like
+the tests back, please. The work you've been doing has been local to your
+computer, and in order for Learn to register that you've solved this lab, you
+need to send your work to back to it. Type `learn submit` and press `Enter` to
+do this. On Learn.co, on the right side of this lesson, upon successful
+completion of the lab, you will see the 'lights' turn green and you will be ready
+to move on to the next lesson.
 
 ## Conclusion
 
-### Cool-Down
+Labs are a major part of this course, and all labs rely on tests that you must
+pass to register completion of the lesson. Being able to read and interpret
+tests will help you unravel complex challenges ahead. More than that, though,
+testing is a powerful tool to become familiar with.
 
-When you're done, click on the **terminal** of the Learn IDE. Your `httpserver`
-program should still be running there. To exit `httpserver` press `Control +
-c`. This will tell `httpserver` to shut down and you should be back at the
-prompt. 
+[Test-driven development][test-driven development] is a common process for
+developing programs in which tests are written before the code. A feature is
+first designed. Those designs are then set up as test expectations. Once the
+tests are created, the actual code is written to pass those tests.
 
-Make sure that you have your HTML content in a file called `my_list.html` in
-order to pass the check. Type `learn` and verify that your tests pass.
+For the purposes of this course, you will be using tests to aid you in
+learning. Eventually, the process here will not be much different from the one
+in the programming world. For instance, you might be given a set of tests that
+describe the look and design of a website and it will be your task to build
+that site to meet those expectations.
 
-Once you've passed the test, run the command `learn submit`. This will log your
-progress to our systems. You're ready to move on to the next lesson!
+For now, being able to read tests learn from them is a skill that will be
+immediately helpful to you.
 
-### Looking Back
 
-In this lab, you have, essentially, done the job of being an HTML author. You
-receive raw _content_, you _mark it up_ to create _source text_. You test,
-tweak, and adjust your _source text_ until the _rendered text_ displayed in the
-browser is to your
-liking. 
+## Resources
 
-In upcoming lessons, we will learn additional tags which provide us an more
-ways to describe our content.  We might be starting with lists today, but soon
-we'll be on this in exciting ways!
+- [Explain Shell][explainshell]
 
-Welcome to the community of web page creators!
+[scientific method]: https://en.wikipedia.org/wiki/Scientific_method
+[test-driven development]: https://en.wikipedia.org/wiki/Test-driven_development
+[rspec]: https://rspec.info/
+[Ruby]: https://www.ruby-lang.org/en/
+[explainshell]: https://explainshell.com/
+[cd]: https://explainshell.com/explain?cmd=cd
