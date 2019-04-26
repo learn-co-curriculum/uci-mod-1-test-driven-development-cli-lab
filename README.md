@@ -95,7 +95,7 @@ You passed. Please give me the test back.
 
 Uh... Oh. Okay! You passed the test! You give the teacher the test back.
 
-In very simple terms, this is how Learn works. With the tests in this course,
+In very simple terms, this is how Learn labs work. With the tests in this course,
 unlike most classroom tests, you can just keep trying until you get it right. If
 you accidentally write `Hello World` and forget the exclamation point, you will
 get feedback and be able to try again.
